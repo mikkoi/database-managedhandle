@@ -8,7 +8,10 @@ set_encoding('utf8');
 
 use Scalar::Util 'refaddr';
 
+# Activate for testing
 # use Log::Any::Adapter ('Stdout', log_level => 'debug' );
+
+use Test2::Require::Module 'Test::Database::Temp';
 
 my @test_dbs;
 BEGIN {
