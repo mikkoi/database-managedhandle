@@ -278,10 +278,6 @@ sub _verify_connection_working {
     }
 }
 
-1;
-
-__END__
-
 =pod
 
 =head1 THANKS
@@ -290,3 +286,5 @@ Big thanks for L<Dancer::Plugin::Database> for being an inspiration
 and example on how to verify database connection is still working.
 
 =cut
+
+1;
