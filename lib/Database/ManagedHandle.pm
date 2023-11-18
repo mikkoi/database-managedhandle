@@ -66,7 +66,7 @@ only one database handle and it is accessible from any part of the code.
 
 Database::ManagedHandle opens and reopens database handles when required.
 It can house several handles. If there is more than one, then one handle
-is the default.
+needs to be defined as the default.
 
 When the program first requests a database handle,
 either a named handle or the default,
@@ -217,6 +217,7 @@ sub dbh {
     my $dbh = $handles->{ $name };
 
     if( ! $self->_verify_connection_working( $dbh ) ) {
+        $self->_log->infof( 'Connection not working for dbh %s, db %s', $dbh, $name );
         $dbh = $self->_create_dbh( $config->{'databases'}->{$name} );
         $handles->{$name} = $dbh;
     }
@@ -259,7 +260,7 @@ sub _verify_connection_working {
             # DB driver itself claims all is OK, trust it:
             return 1;
         } else {
-            # It was "0 but true", meaning the default DBI ping implementation
+            # It was "0 but true", meaning the default DBI ping implementation.
             # Implement our own basic check, by performing a real simple query.
             local $EVAL_ERROR = undef; # protect existing $@ ($EVAL_ERROR)
             my $r = eval {
