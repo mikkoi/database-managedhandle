@@ -225,7 +225,8 @@ sub dbh {
 
 sub _create_dbh {
     my ($self, $cfg) = @_;
-    $self->_log->debugf( 'Create and connect database handle for dsn \'%s\'', $cfg->{'dsn'} );
+    $self->_log->debugf( 'Database::ManagedHandle::_create_dbh(%s)', $cfg );
+    $self->_log->debugf( 'Database::ManagedHandle::_create_dbh): Create and connect database handle for dsn \'%s\'', $cfg->{'dsn'} );
     my $dbh = DBI->connect(
             # $connection_string , $username , $password , $connection_args,
             $cfg->{'dsn'},
