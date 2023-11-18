@@ -211,11 +211,12 @@ sub dbh {
     my $handles = $self->_handles;
     my $config = $self->_config;
     $name = $config->{'default'} unless( $name );
+
+    croak 'No database with name ' . $name . ' in config'
+        unless exists $config->{'databases'}->{$name};
     my $dbh = $handles->{ $name };
 
     if( ! $self->_verify_connection_working( $dbh ) ) {
-        croak 'No database with name ' . $name . ' in config'
-            unless exists $config->{'databases'}->{$name};
         $dbh = $self->_create_dbh( $config->{'databases'}->{$name} );
         $handles->{$name} = $dbh;
     }
