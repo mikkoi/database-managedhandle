@@ -217,7 +217,7 @@ sub dbh {
         croak 'No database with name ' . $name . ' in config'
             unless exists $config->{'databases'}->{$name};
         $dbh = $self->_create_dbh( $config->{'databases'}->{$name} );
-        $handles->{'name'} = $dbh;
+        $handles->{$name} = $dbh;
     }
 
     return $dbh;

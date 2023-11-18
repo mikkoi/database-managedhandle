@@ -63,12 +63,19 @@ subtest 'Two local copies of ManagedHandle' => sub {
     my $dbh1 = $mh1->dbh( $test_dbs[0]->name );
     my $ary_ref = $dbh1->selectall_arrayref( 'SELECT 1' );
     is( $ary_ref->[0]->[0], 1, 'SELECT 1');
+
     my $mh2 = Database::ManagedHandle->instance();
     my $dbh2 = $mh2->dbh( $test_dbs[1]->name );
     my $dbh1_1 = $mh2->dbh( $test_dbs[0]->name );
+    my $dbh2_1 = $mh1->dbh( $test_dbs[1]->name );
+
     ok( refaddr($mh1) == refaddr($mh2), 'Managed handles are the same object' );
-    ok( refaddr($dbh1) != refaddr($dbh2), 'Handles are not the same object' );
-    ok( refaddr($dbh1) != refaddr($dbh1_1), 'Handles are the same object' );
+
+    ok( refaddr($dbh1)   != refaddr($dbh2),   'Database handles are not the same object' );
+    ok( refaddr($dbh1_1) != refaddr($dbh2_1), 'Database handles are not the same object' );
+    ok( refaddr($dbh1)   == refaddr($dbh1_1), 'Database handles are the same object' );
+    ok( refaddr($dbh2)   == refaddr($dbh2_1), 'Database handles are the same object' );
+
     done_testing;
 };
 
