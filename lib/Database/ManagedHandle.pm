@@ -217,7 +217,10 @@ sub dbh {
     my $dbh = $handles->{ $name };
 
     if( ! $self->_verify_connection_working( $dbh ) ) {
-        $self->_log->infof( 'Connection not working for dbh %s, db %s', $dbh, $name );
+        $self->_log->infof(
+            'Connection not working for dbh %s, db %s (this is normal)',
+            $dbh, $name
+        );
         $dbh = $self->_create_dbh( $config->{'databases'}->{$name} );
         $handles->{$name} = $dbh;
     }
