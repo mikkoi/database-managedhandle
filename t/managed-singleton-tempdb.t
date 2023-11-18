@@ -1,4 +1,5 @@
 #!perl
+
 use strict;
 use warnings;
 
@@ -11,15 +12,15 @@ use Scalar::Util 'refaddr';
 # Activate for testing
 # use Log::Any::Adapter ('Stdout', log_level => 'debug' );
 
-use Test2::Require::Module 'Test::Database::Temp';
+use Test::Database::Temp;
+use Database::Temp;
 
 my @test_dbs;
 BEGIN {
     diag 'Create temp databases';
-    use Test::Database::Temp;
-    my @drivers = qw( Pg SQLite );
+    my @drivers = Test::Database::Temp->available_drivers();
     foreach (@drivers) {
-        my $test_db = Test::Database::Temp->new(
+        my $test_db = Database::Temp->new(
             driver => $_,
         );
         diag 'Test database (' . $test_db->driver . ') ' . $test_db->name . " created.\n";
@@ -31,7 +32,6 @@ BEGIN {
         use warnings;
 
         use Moo;
-        use File::Temp qw( tempfile );
 
         has config => (
             is => 'ro',
@@ -51,7 +51,7 @@ BEGIN {
         );
 
         1;
-        }
+    }
     ## no critic (Variables::RequireLocalizedPunctuationVars)
     $ENV{DATABASE_MANAGED_HANDLE_CONFIG} = 'Database::ManagedHandleConfigTestTempDB';
 

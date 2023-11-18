@@ -72,9 +72,14 @@ subtest 'Two local copies of ManagedHandle' => sub {
     my $mh2 = Database::ManagedHandle->instance();
     my $dbh2 = $mh2->dbh( 'db2' );
     my $dbh1_1 = $mh2->dbh( 'db1' );
+    my $dbh2_1 = $mh1->dbh( 'db2' );
+
     ok( refaddr($mh1) == refaddr($mh2), 'Managed handles are the same object' );
-    ok( refaddr($dbh1) != refaddr($dbh2), 'Handles are not the same object' );
-    ok( refaddr($dbh1) != refaddr($dbh1_1), 'Handles are the same object' );
+
+    ok( refaddr($dbh1)   != refaddr($dbh2),   'Database handles are not the same object' );
+    ok( refaddr($dbh1_1) != refaddr($dbh2_1), 'Database handles are not the same object' );
+    ok( refaddr($dbh1)   == refaddr($dbh1_1), 'Database handles are the same object' );
+    ok( refaddr($dbh2)   == refaddr($dbh2_1), 'Database handles are the same object' );
 
     done_testing;
 };
@@ -90,9 +95,14 @@ subtest 'ManagedHandle in a different file' => sub {
     my $mh2 = Database::ManagedHandle->instance();
     my $dbh2 = $mh2->dbh( 'db2' );
     my $dbh1_1 = $mh2->dbh( 'db1' );
+    my $dbh2_1 = $mh1->dbh( 'db2' );
+
     ok( refaddr($mh1) == refaddr($mh2), 'Managed handles are the same object' );
-    ok( refaddr($dbh1) != refaddr($dbh2), 'Handles are not the same object' );
-    ok( refaddr($dbh1) != refaddr($dbh1_1), 'Handles are the same object' );
+
+    ok( refaddr($dbh1)   != refaddr($dbh2),   'Database handles are not the same object' );
+    ok( refaddr($dbh1_1) != refaddr($dbh2_1), 'Database handles are not the same object' );
+    ok( refaddr($dbh1)   == refaddr($dbh1_1), 'Database handles are the same object' );
+    ok( refaddr($dbh2)   == refaddr($dbh2_1), 'Database handles are the same object' );
 
     done_testing;
 };
