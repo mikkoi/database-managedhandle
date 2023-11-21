@@ -6,7 +6,6 @@ use utf8;
 use Test2::V0;
 set_encoding('utf8');
 
-use Data::Dumper;
 use Scalar::Util 'refaddr';
 
 # Activate for testing
@@ -19,6 +18,11 @@ BEGIN {
     $lib_path = File::Spec->catdir(($RealBin =~ /(.+)/msx)[0], q{.}, 'lib');
 }
 use lib "$lib_path";
+
+# N.B. This test does not use Database::Temp.
+# Since SQLite databases are just files, we only need DBI and driver DBD::SQLite.
+# Database::ManagedHandle already requires DBI.
+use Test2::Require::Module 'DBD::SQLite';
 
 BEGIN {
     {
@@ -62,6 +66,17 @@ BEGIN {
 
     use Database::ManagedHandle;
 }
+
+subtest 'Failing with wrong database name' => sub {
+    my $mh = Database::ManagedHandle->instance;
+    my $db_name = 'non_existing_db';
+    like(
+        dies { $mh->dbh( $db_name ) },
+        qr/^ No [\s] database [\s] with [\s] name [\s] $db_name [\s] /msx,
+        'Exception when asking for handle of a non-existing database',
+    );
+    done_testing;
+};
 
 subtest 'Two local copies of ManagedHandle' => sub {
     my $mh1 = Database::ManagedHandle->instance;

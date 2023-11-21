@@ -47,6 +47,7 @@ BEGIN {
     }
     diag 'Create temp databases';
     my @drivers = Test::Database::Temp->available_drivers();
+    # my @drivers = qw( SQLite );
     foreach (@drivers) {
         my $test_db = Database::Temp->new(
             driver => $_,
@@ -91,7 +92,7 @@ BEGIN {
 }
 
 for my $test_db (@test_dbs) {
-    subtest "ManagedHandle returns correct database handle for $test_db" => sub {
+    subtest "ManagedHandle returns correct database handle for ${ \$test_db->name } (${ \$test_db->driver })" => sub {
         my $mh1 = Database::ManagedHandle->instance;
         my $dbh1 = $mh1->dbh( $test_db->name );
         {
