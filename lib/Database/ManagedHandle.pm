@@ -181,30 +181,20 @@ sub _check_config_is_valid {
     return 1;
 }
 
-# TODO This still needs a lot more work!
-# Look at https://github.com/bigpresh/Dancer-Plugin-Database/
-#   blob/master/Shared/lib/Dancer/Plugin/Database/Core.pm
-
 =for stopwords dbh
 
 =head1 METHODS
 
-=over 8
-
-=item dbh
+=head2 dbh
 
 Get the default database handle.
 
     my $dbh = Database::ManagedHandle->instance()->dbh();
 
-=item dbh SCALAR
-
 Get a database handle by its name.
 
     my $mh = Database::ManagedHandle->instance;
     my $dbh = $mh->dbh( 'db_example' );
-
-=back
 
 =cut
 
