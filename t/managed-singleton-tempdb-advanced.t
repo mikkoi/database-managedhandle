@@ -48,7 +48,6 @@ BEGIN {
     }
     diag 'Create temp databases';
     my @drivers = Test::Database::Temp->available_drivers();
-    # my @drivers = qw( SQLite );
     foreach (@drivers) {
         my $test_db = Database::Temp->new(
             driver => $_,
