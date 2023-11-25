@@ -1,4 +1,5 @@
 #!perl
+## no critic (ControlStructures::ProhibitPostfixControls)
 
 use strict;
 use warnings;
@@ -34,15 +35,15 @@ BEGIN {
     sub init_db {
         my ($dbh, $name, $info, $driver) = @_;
         # warn $name, $driver;
-        $dbh->begin_work();
+        $dbh->begin_work() if( ! $driver eq 'CSV' );
         foreach my $row (split qr/;\s*/msx, $DDL) {
             $dbh->do( $row );
         }
-        $dbh->commit;
-        $dbh->begin_work();
+        $dbh->commit if( ! $driver eq 'CSV' );
+        $dbh->begin_work() if( ! $driver eq 'CSV' );
         my $sql = $INSERT_SQL =~ s/<DB_NAME>/$driver/msxr;
         $dbh->do( $sql );
-        $dbh->commit;
+        $dbh->commit if( ! $driver eq 'CSV' );
         return;
     }
     diag 'Create temp databases';
