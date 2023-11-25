@@ -18,7 +18,9 @@ use Database::Temp;
 my @test_dbs;
 BEGIN {
     diag 'Create temp databases';
-    my @drivers = Test::Database::Temp->available_drivers();
+    # We use only SQLite drivers because we can be certain that SQLite driver is present.
+    # The other tests test against all available drivers.
+    my @drivers = Test::Database::Temp->available_drivers( drivers => [ qw( SQLite SQLite ) ] );
     foreach (@drivers) {
         my $test_db = Database::Temp->new(
             driver => $_,
