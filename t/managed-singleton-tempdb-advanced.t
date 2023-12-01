@@ -19,18 +19,18 @@ use Database::Temp;
 
 my @test_dbs;
 BEGIN {
-    const my $DDL => <<~'EOF';
-        CREATE TABLE test_table (
-            id INTEGER
-            , driver VARCHAR(20)
-            , created INTEGER
-            , PRIMARY KEY (id)
-            );
-    EOF
+    const my $DDL => <<'EOF';
+    CREATE TABLE test_table (
+        id INTEGER
+        , driver VARCHAR(20)
+        , created INTEGER
+        , PRIMARY KEY (id)
+        );
+EOF
 
-    const my $INSERT_SQL => <<~'EOF';
-      INSERT INTO test_table(id, driver, created) VALUES (1, '<DB_NAME>', 23);
-    EOF
+    const my $INSERT_SQL => <<'EOF';
+  INSERT INTO test_table(id, driver, created) VALUES (1, '<DB_NAME>', 23);
+EOF
 
     sub init_db {
         my ($dbh, $name, $info, $driver) = @_;
