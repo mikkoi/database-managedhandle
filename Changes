@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+        * Add MooX::Singleton to runtime dependencies
 
 0.001     2023-11-28 22:15:55+01:00 Europe/Stockholm
         * Initial version
