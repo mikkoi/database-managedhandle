@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+            * Remove whitespace
 
 0.003     2023-12-26 20:54:53+02:00 Europe/Helsinki
             * Change Prereqs / TestRecommends to TestRequires

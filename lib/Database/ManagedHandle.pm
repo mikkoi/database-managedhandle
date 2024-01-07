@@ -49,7 +49,7 @@ use warnings;
 
     # Another example:
     Database::ManagedHandle->instance()->dbh('db2')->do( 'INSERT INTO t VALUES(1,2,3)' );
-    
+
 
 =head1 DESCRIPTION
 
@@ -107,7 +107,7 @@ in the preamble of your program:
 
 Alternative, you can do this on the command line:
 
-    perl '-MLog::Any::Adapter(Stdout, log_level=>trace)' 
+    perl '-MLog::Any::Adapter(Stdout, log_level=>trace)'
 
 =cut
 
